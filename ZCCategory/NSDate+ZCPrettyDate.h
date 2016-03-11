@@ -9,6 +9,13 @@
 
 @interface NSDate (ZCDateConvert)
 
+/**
+ *  获取当前时区时间，不会相差8小时
+ *
+ *  @return 当前时区时间
+ */
++ (NSDate *)currentDate;
+
 #pragma mark - 转换时区、获取当天0点
 /**
  *  转换时区TimeZone到当前时区

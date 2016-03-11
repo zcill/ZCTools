@@ -9,6 +9,15 @@
 
 @implementation NSDate (ZCDateConvert)
 
+#pragma mark - 获取正常的当前时间，不会相差8小时
++ (NSDate *)currentDate {
+    NSDate *date = [NSDate date];
+    NSTimeZone *zone = [NSTimeZone systemTimeZone];
+    NSInteger interval = [zone secondsFromGMTForDate:date];
+    NSDate *localDate = [date dateByAddingTimeInterval:interval];
+    return localDate;
+}
+
 #pragma mark - 转换时区、获取当天0点
 + (NSDate *)zc_localDateWithCurrentDate:(NSDate *)date {
     
@@ -26,7 +35,7 @@
     [components setHour:0];
     [components setMinute:0];
     [components setSecond:0];
-    return [calendar dateFromComponents:components];
+    return [NSDate zc_localDateWithCurrentDate:[calendar dateFromComponents:components]];
     
 }
 
@@ -124,16 +133,14 @@
         prettyTimestamp = [NSString stringWithFormat:@"%d小时前", (int) floor(delta/3600.0) ];
     } else if (delta < ( 86400 * 2 ) ) {
         prettyTimestamp = @"1天前";
-    } else // if (delta < ( 86400 * 7 ) )
-    {
+    } else if (delta < ( 86400 * 7 ) ) {
         prettyTimestamp = [NSString stringWithFormat:@"%d天前", (int) floor(delta/86400.0) ];
-    }
-    //    else {
-    //        NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-    //        [formatter setDateStyle:NSDateFormatterMediumStyle];
-    //
-    //        prettyTimestamp = [NSString stringWithFormat:@"on %@", [formatter stringFromDate:self]];
-    //    }
+    } else {
+            NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateStyle:NSDateFormatterMediumStyle];
+    
+            prettyTimestamp = [NSString stringWithFormat:@"%@", [formatter stringFromDate:self]];
+        }
     
     return prettyTimestamp;
     
