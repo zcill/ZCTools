@@ -55,6 +55,10 @@
  */
 - (NSString *)zc_formatDate:(NSDate *)date;
 /**
+ *  传入一个字符串，返回一个NSDate
+ */
++ (NSDate *)zc_dateConvertByString:(NSString *)string;
+/**
     时间格式按照x天前、x小时前、x分钟前排布
  */
 - (NSString *)zc_prettyDate:(NSTimeInterval)timeInterval;

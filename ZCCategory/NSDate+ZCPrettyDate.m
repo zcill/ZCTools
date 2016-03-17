@@ -115,6 +115,15 @@
     return formatDate;
 }
 
++ (NSDate *)zc_dateConvertByString:(NSString *)string {
+    NSDate *date;
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    date = [formatter dateFromString:string];
+    return date;
+}
+
 - (NSString *)zc_prettyDate:(NSTimeInterval)timeInterval {
     
     NSString *prettyTimestamp;
